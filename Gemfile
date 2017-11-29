@@ -4,6 +4,9 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+# facebook omiauth
+gem 'omniauth-facebook'
+#devise for user authentications
 gem 'devise'
 #Simple Form
 gem 'simple_form'

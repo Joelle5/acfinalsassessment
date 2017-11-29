@@ -1,4 +1,12 @@
 h1 Pages#index
 p Find me in app/views/pages/index.html.slim
+
 .container
-  = link_to 'See my notes',notes_path
+  -if user_signed_in?
+    = link_to 'See my notes',notes_path
+    br
+    btn
+      = link_to 'Log Out', destroy_user_session_path, method: :delete, :class => "btn btn-outline-danger"
+  -else
+    btn
+      = link_to "User Sign In", new_user_session_path, class:"nav-item nav-link btn btn-info btn-sm"

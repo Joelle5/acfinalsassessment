@@ -5,11 +5,15 @@ class Users::LikesController < ApplicationController
   def create
     note = Note.find(params[:note_id])
         current_user.like(note)
+        UserMailer.send_like(note.user, note).deliver_later
         redirect_to users_notes_path
+
   end
 
   def destroy
-    Like.find_by(user_id: current_user.id, note: @note).destroy
+    @like = Like.find_by(user_id: current_user.id)
+    @like.destroy
+    UserMailer.send_unlike(@note.user, @note).deliver_later
     redirect_to users_notes_path
   end
 

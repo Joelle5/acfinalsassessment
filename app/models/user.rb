@@ -18,6 +18,12 @@ class User < ApplicationRecord
   has_many :notes
   has_many :likes
 
+  has_many :active_relationships, class_name: 'Relationship', foreign_key: :follower_id
+  has_many :followees, through: :active_relationships
+
+  has_many :passive_relationships, class_name: 'Relationship', foreign_key: :followee_id
+  has_many :followers, through: :passive_relationships
+
   def like(note)
     likes.create(note_id: note.id)
   end
@@ -26,5 +32,16 @@ class User < ApplicationRecord
     likes.exists?(note_id: note.id)
   end
 
+  def follow(user)
+    followees << user if !self.following?(user) && self != user
+  end
+
+  def unfollow(user)
+    followees.delete(user)
+  end
+
+  def following?(user)
+    followees.include?(user)
+  end
 
 end

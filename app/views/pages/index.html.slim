@@ -11,11 +11,25 @@ p Find me in app/views/pages/index.html.slim
     btn
       = link_to "User Sign In", new_user_session_path, class:"nav-item nav-link btn btn-info btn-sm"
   .container
-    -@notes.each do |note|
-      ul
+
+      -@notes.each do |note|
+        ul
+
         h3=note.title
         p=note.body
         -if user_signed_in? && current_user.likes?(note)
           = link_to 'UNLIKE', users_note_likes_path(note), method: :delete
         -else
           = link_to 'LIKE', users_note_likes_path(note), method: :post
+-if user_signed_in?
+  .container
+    -@users.each do |user|
+      ul
+        -unless current_user == user
+          =user.email
+          - unless current_user.following?(user)
+            =form_for (current_user.active_relationships.build) do |f|
+              = hidden_field_tag :followee_id, user.id
+              =f.submit "Follow", class: "btn btn-primary"
+          br
+          = link_to 'Unfollow', relationship_path(user), method: :delete, class: "btn btn-danger" if current_user.following?(user)

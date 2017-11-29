@@ -1,0 +1,9 @@
+<div>
+<% if user_signed_in? && current_user.likes?(note)%>
+  <%# todo soon: unlike button form %>
+<% else %>
+  <%= link_to 'LIKE', users_note_likes_path, method: :post %>
+
+
+<% end %>
+</div>

@@ -15,4 +15,16 @@ class User < ApplicationRecord
            # user.skip_confirmation!
          end
        end
+  has_many :notes
+  has_many :likes
+
+  def like(note)
+    likes.create(note_id: note.id)
+  end
+
+  def likes?(note)
+    likes.exists?(note_id: note.id)
+  end
+
+
 end

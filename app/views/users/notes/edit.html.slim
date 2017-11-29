@@ -1,10 +1,11 @@
 hr
 h1
  |Note Editor
+ = link_to 'Log Out', destroy_user_session_path, method: :delete, :class => "btn btn-outline-danger"
 .container
   h3= @note.title
   .container
-  = simple_form_for @note, url: note_path, method: :put do |f|
+  = simple_form_for @note, url: users_note_path, method: :put do |f|
     = f.input :title, label: false
     = f.input :body, label: false
     = f.button :submit, :label =>"Save", :class => "btn btn-outline-info"
@@ -14,4 +15,4 @@ h1
         = flash[:notice]
         |  =
   p
-  h4= link_to 'Back to your notes', notes_path
+  h4= link_to 'Back to your notes', users_notes_path

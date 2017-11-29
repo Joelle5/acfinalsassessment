@@ -2,7 +2,7 @@ hr
 .container
   h3 Making a new note
   .container
-  = simple_form_for @note do |f|
+  = simple_form_for @note, url: users_notes_path do |f|
     = f.input :title, label: false , placeholder: "Title name "
     = f.input :body, label: false , placeholder: "What do you want to say "
     = f.button :submit, :label =>"Save", :class => "btn btn-outline-info"

@@ -1,6 +1,7 @@
-class NotesController < ApplicationController
+class Users::NotesController < ApplicationController
+  before_action :authenticate_user!
   def index
-    @notes = Note.all
+    @notes = current_user.notes.all
     @note = Note.new
   end
 
@@ -8,12 +9,12 @@ class NotesController < ApplicationController
   end
 
   def create
-    @note = Note.new(note_params)
+    @note = current_user.notes.new(note_params)
     if @note.save
       flash[:notice] = "Note is added!"
-      redirect_to notes_path
+      redirect_to users_notes_path
     else
-      render :new
+      redirect_to users_notes_path
     end
   end
 
@@ -28,7 +29,7 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
     if @note.update(note_params)
       flash[:notice] = "Note have been changed!"
-      redirect_to notes_path
+      redirect_to users_notes_path
     else
       render :edit
     end
@@ -38,7 +39,7 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
     @note.destroy
     flash[:alert] = "Deletion completed!!"
-    redirect_to notes_path
+    redirect_to users_notes_path
 
 
 
@@ -46,6 +47,6 @@ class NotesController < ApplicationController
 
   private
   def note_params
-    params.require(:note).permit(:title, :body)
+    params.require(:note).permit(:title, :body, :user_id)
   end
 end

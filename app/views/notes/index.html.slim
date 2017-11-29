@@ -1,0 +1,11 @@
+h1 Notes#index
+p Find me in app/views/notes/index.html.slim
+= render partial: 'new'
+.container
+  ul
+    hr
+    -@notes.each do |note|
+      li
+        h3=note.title
+        p=note.body
+        hr

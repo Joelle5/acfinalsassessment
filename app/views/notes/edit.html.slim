@@ -1,2 +1,17 @@
-h1 Notes#edit
-p Find me in app/views/notes/edit.html.slim
+hr
+h1
+ |Note Editor
+.container
+  h3= @note.title
+  .container
+  = simple_form_for @note, url: note_path, method: :put do |f|
+    = f.input :title, label: false
+    = f.input :body, label: false
+    = f.button :submit, :label =>"Save", :class => "btn btn-outline-info"
+    - if flash[:notice]
+      a.notice
+        |  =
+        = flash[:notice]
+        |  =
+  p
+  h4= link_to 'Back to your notes', notes_path
